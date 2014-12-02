@@ -1,0 +1,12 @@
+<
+int a
+int b
+int c
+int d
+
+a eq 10
+b eq 5
+c eq a + b
+d eq c - 2
+e eq 'apple'
+>
