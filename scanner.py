@@ -24,9 +24,9 @@ class Codifier(object):
         return self.coding.values()
 
     def id_for(self, token):
-        for id, token in self.coding.iteritems():
-            if token == token:
-                return id
+        for idd, t in self.coding.iteritems():
+            if t == token:
+                return idd
         return None
 
 
@@ -51,7 +51,6 @@ class Scanner(object):
         for line in f:
             line = line.rstrip()
             tokens = re.split(' |\(|\)|\[|\]', line)
-            print tokens
             for token in tokens:
                 if not token:
                     continue
@@ -62,6 +61,8 @@ class Scanner(object):
                     else:
                         idd = self.ist.getid_or_add(token)
                         self.pif.add(self.codifier.id_for('constant'), token)
+                else:
+                    self.pif.add(self.codifier.id_for(token), -1)
 
     def atomic(self, token):
         if token in (True, False):
@@ -117,6 +118,7 @@ def main():
     print scanner.ist
     print scanner.cst
     print scanner.pif
+    print scanner.codifier.id_for('eq')
 
 if __name__ == "__main__":
     main()
