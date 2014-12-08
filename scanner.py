@@ -140,6 +140,8 @@ class Scanner(object):
             return False
         if not token.isalnum():
             return False
+        if not token[0].isalpha():
+            return False
         return True
 
     def atomic(self, token):
