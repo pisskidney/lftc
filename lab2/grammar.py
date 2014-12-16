@@ -40,6 +40,7 @@ class Grammar(object):
             else:
                 new.productions.append((nterm, result[0], result[1]))
             prod = raw_input('Production (ex: S -> aS or A -> E): ')
+        return new
 
     @classmethod
     def from_file(self, filename):
