@@ -1,0 +1,7 @@
+A B C
+o p q
+A
+C
+A B o
+B A p
+B C q
