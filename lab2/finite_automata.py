@@ -2,7 +2,7 @@
 
 
 import sys
-from grammar import Grammar, GrammarMenu
+#from grammar import Grammar, GrammarMenu
 
 
 class FiniteAutomata(object):

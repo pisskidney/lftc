@@ -2,6 +2,7 @@
 
 
 import sys
+#from finite_automata import FiniteAutomata
 
 
 class Grammar(object):
@@ -57,6 +58,17 @@ class Grammar(object):
                     new.productions.append([
                         non_terminal, result[0], result[1]
                     ])
+        return new
+
+    @classmethod
+    def from_finite_automata(self, fa):
+        new = Grammar()
+        new.non_terminals = fa.states
+        new.terminals = fa.alphabet
+        for a in fa.accepting:
+            new.productions.append((a, self.empty_string))
+        for t in fa.transitions:
+            new.productions.append((t[0], t[2], t[1]))
         return new
 
     def is_regular(self):
@@ -129,8 +141,14 @@ class GrammarMenu(object):
 
 
 def main():
+    '''
     g = Grammar.from_file('grammar.txt')
     g = Grammar.from_console()
+    gm = GrammarMenu(g)
+    gm.go()
+    '''
+    fa = FiniteAutomata.from_file('finite_automata.txt')
+    g = Grammar.from_finite_automata(fa)
     gm = GrammarMenu(g)
     gm.go()
 
