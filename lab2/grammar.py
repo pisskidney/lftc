@@ -18,6 +18,30 @@ class Grammar(object):
         return ' %s ' % Grammar.arrow_symbol
 
     @classmethod
+    def from_console(self):
+        new = Grammar()
+        print('Just enter an empty string when your done.')
+        nterm = raw_input('Non-terminal: ')
+        while nterm != '':
+            new.non_terminals.add(nterm)
+            nterm = raw_input('Non-terminal: ')
+        term = raw_input('Terminal: ')
+        while term != '':
+            new.terminals.add(term)
+            term = raw_input('Terminal: ')
+        prod = raw_input('Production (ex: S -> aS or A -> E): ')
+        while prod != '':
+            nterm, result = prod.split(self.arrow())
+            if len(result) == 1:
+                if result != self.empty_string:
+                    print 'Invalid production!'
+                    continue
+                new.productions.append((nterm, result))
+            else:
+                new.productions.append((nterm, result[0], result[1]))
+            prod = raw_input('Production (ex: S -> aS or A -> E): ')
+
+    @classmethod
     def from_file(self, filename):
         new = Grammar()
         with open(filename, mode='r') as f:
@@ -105,6 +129,7 @@ class GrammarMenu(object):
 
 def main():
     g = Grammar.from_file('grammar.txt')
+    g = Grammar.from_console()
     gm = GrammarMenu(g)
     gm.go()
 
