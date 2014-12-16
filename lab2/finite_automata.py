@@ -2,6 +2,7 @@
 
 
 import sys
+from grammar import Grammar, GrammarMenu
 
 
 class FiniteAutomata(object):
@@ -23,6 +24,20 @@ class FiniteAutomata(object):
             for line in f:
                 s, d, a = line.strip().split(' ')
                 new.transitions.append((s, d, a))
+        return new
+
+    @classmethod
+    def from_grammar(self, g):
+        new = FiniteAutomata()
+        new.states = g.non_terminals
+        new.alphabet = g.terminals
+        new.start = g.non_terminals[0]
+        new.accepting = {
+            p[0] for p in g.productions if p[1] == g.empty_string
+        }
+        for p in g.productions:
+            if len(p) == 3:
+                new.transitions.append((p[0], p[2], p[1]))
         return new
 
 
@@ -61,10 +76,15 @@ class FiniteAutomataMenu(object):
 
 
 def main():
+    '''
     fa = FiniteAutomata.from_file('finite_automata.txt')
     fam = FiniteAutomataMenu(fa)
     fam.go()
-
+    '''
+    g = Grammar.from_file('grammar.txt')
+    fa = FiniteAutomata.from_grammar(g)
+    fam = FiniteAutomataMenu(fa)
+    fam.go()
 
 if __name__ == "__main__":
     main()
